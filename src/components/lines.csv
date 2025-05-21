@@ -1,0 +1,13 @@
+line_code,line_name,line_color
+"B","Bakerloo","rgb(178, 99, 0)"
+"C","Central","rgb(220, 36, 31)"
+"CI","Circle","rgb(255, 200, 10)"
+"D","District","rgb(0, 125, 50)"
+"H","Hammersmith & City","rgb(245, 137, 166)"
+"J","Jubilee","rgb(131, 141, 147)"
+"M","Metropolitan","rgb(155, 0, 88)"
+"N","Northern","rgb(0, 0, 0)"
+"P","Piccadilly","rgb(0, 25, 168)"
+"V","Victoria","rgb(3, 155, 229)"
+"W","Waterloo & City","rgb(118, 208, 189)"
+"NR","Network Rail","rgb(234, 105, 29)"
