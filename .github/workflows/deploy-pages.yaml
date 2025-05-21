@@ -45,7 +45,7 @@ jobs:
       - name: Build
         run: pnpm run build
         env:
-          VITE_CLICKHOUSE_URL: ${{ vars.VITE_CLICKHOUSE_URL }}
+          VITE_CLICKHOUSE_URL: ${{ secrets.VITE_CLICKHOUSE_URL }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
