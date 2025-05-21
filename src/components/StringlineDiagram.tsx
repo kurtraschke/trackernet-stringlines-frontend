@@ -85,6 +85,9 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     sort_order: index,
   }));
 
+  // @ts-expect-error we will have thrown already if cdData is undefined
+  const sortDirection = cdData.direction ? "ascending" : "descending";
+
   const spec: TopLevelSpec = {
     // @ts-expect-error we will have thrown already if cdData is undefined
     title: `${cdData.name} on ${trafficDay.toString({ calendarName: "never" })}`,
@@ -166,7 +169,7 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
       y: {
         field: "station_code",
         type: "nominal",
-        sort: { field: "sort_order", order: "descending" },
+        sort: { field: "sort_order", order: sortDirection },
         title: "Station",
         axis: {
           labelExpr:

@@ -50,6 +50,7 @@ export function stationNamesQuery(client: WebClickHouseClient) {
 interface ConfigurationDetails {
   id: number;
   name: string;
+  direction: number;
   station_codes: string[];
 }
 
@@ -62,7 +63,7 @@ export function configurationDetailsQuery(
     queryFn: ({ signal, queryKey: [, configurationId] }) =>
       client
         .query({
-          query: `SELECT id, name, station_codes
+          query: `SELECT id, name, direction, station_codes
                   FROM v_web_configuration_details(p_configuration_id={configuration_id: UInt64})`,
           format: "JSONEachRow",
           clickhouse_settings: { output_format_json_quote_64bit_integers: 0 },
