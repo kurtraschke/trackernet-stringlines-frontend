@@ -47,11 +47,6 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     throw new Error("Error loading configuration details", { cause: cdError });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  if (!cdIsPending && cdData === undefined) {
-    notFound({ throw: true, routeId: "/stringline/$config/$trafficDay" });
-  }
-
   const staleTime = isCurrentTrafficDay(trafficDay) ? 60 * 1000 : Infinity;
   const refreshInterval = isCurrentTrafficDay(trafficDay) ? 60 * 1000 : false;
 
@@ -75,21 +70,21 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     return <EmptyState titleText="Loading" headingLevel="h4" icon={Spinner} />;
   }
 
+  if (cdData === undefined) {
+    throw notFound({ routeId: "/stringline/$config/$trafficDay" });
+  }
+
   const { start: trafficDayStart, end: trafficDayEnd } =
     trafficDayToTimeRange(trafficDay);
 
-  // @ts-expect-error we will have thrown already if cdData is undefined
-  // noinspection JSObjectNullOrUndefined
   const sortDataset = cdData.station_codes.map((value, index) => ({
     station_code: value,
     sort_order: index,
   }));
 
-  // @ts-expect-error we will have thrown already if cdData is undefined
   const sortDirection = cdData.direction ? "ascending" : "descending";
 
   const spec: TopLevelSpec = {
-    // @ts-expect-error we will have thrown already if cdData is undefined
     title: `${cdData.name} on ${trafficDay.toString({ calendarName: "never" })}`,
     width: "container",
     height: "container",

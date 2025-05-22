@@ -3,8 +3,7 @@ import { currentTrafficDay } from "../utils.ts";
 
 export const Route = createFileRoute("/stringline/$config/today")({
   loader: ({ params: { config } }) => {
-    redirect({
-      throw: true,
+    throw redirect({
       to: "/stringline/$config/$trafficDay",
       params: {
         config: config,

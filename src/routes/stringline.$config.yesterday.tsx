@@ -4,8 +4,7 @@ import { Temporal } from "temporal-polyfill";
 
 export const Route = createFileRoute("/stringline/$config/yesterday")({
   loader: ({ params: { config } }) => {
-    redirect({
-      throw: true,
+    throw redirect({
       to: "/stringline/$config/$trafficDay",
       params: {
         config: config,

@@ -41,6 +41,18 @@ export default tseslint.config(
       ],
       ...reactX.configs["recommended-typescript"].rules,
       ...reactDom.configs.recommended.rules,
+      "@typescript-eslint/only-throw-error": [
+        "error",
+        {
+          allow: [
+            {
+              from: "package",
+              name: ["NotFoundError", "Redirect"],
+              package: "@tanstack/router-core",
+            },
+          ],
+        },
+      ],
     },
   },
 );
