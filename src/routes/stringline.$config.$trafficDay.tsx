@@ -1,5 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Split, SplitItem, Stack, StackItem } from "@patternfly/react-core";
+import {
+  Spinner,
+  Split,
+  SplitItem,
+  Stack,
+  StackItem,
+} from "@patternfly/react-core";
 import TrafficDaySelector from "../components/TrafficDaySelector.tsx";
 import ConfigurationSelector from "../components/ConfigurationSelector.tsx";
 import { Temporal } from "temporal-polyfill";
@@ -7,6 +13,7 @@ import StringlineDiagram from "../components/StringlineDiagram.tsx";
 import ErrorComponent from "../components/ErrorComponent.tsx";
 import NotFoundComponent from "../components/NotFoundRouteComponent.tsx";
 import { dataQualityForConfiguration } from "../components/DataQuality.tsx";
+import { useIsFetching } from "@tanstack/react-query";
 
 export const Route = createFileRoute("/stringline/$config/$trafficDay")({
   component: RouteComponent,
@@ -17,6 +24,7 @@ export const Route = createFileRoute("/stringline/$config/$trafficDay")({
 function RouteComponent() {
   const { config, trafficDay } = Route.useParams();
   const navigate = useNavigate({ from: "/stringline/$config/$trafficDay" });
+  const isFetching = useIsFetching();
 
   const setSelectedConfiguration = (selectedConfiguration: string) => {
     void navigate({
@@ -56,6 +64,12 @@ function RouteComponent() {
           </SplitItem>
           <SplitItem className={"pf-v6-u-align-self-flex-end"}>
             {dataQualityForConfiguration(config)}
+          </SplitItem>
+          <SplitItem
+            isFilled
+            className={"pf-v6-u-align-self-flex-end pf-v6-u-text-align-end"}
+          >
+            {isFetching ? <Spinner size="md" /> : null}
           </SplitItem>
         </Split>
       </StackItem>
