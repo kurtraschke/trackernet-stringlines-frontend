@@ -1,33 +1,51 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  Link,
+  linkOptions,
+  Outlet,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import {
   Brand,
-  Button,
   Masthead,
   MastheadBrand,
   MastheadContent,
   MastheadLogo,
   MastheadMain,
+  Nav,
+  NavItem,
+  NavList,
   Page,
   PageSection,
-  Spinner,
-  Toolbar,
-  ToolbarContent,
-  ToolbarItem,
 } from "@patternfly/react-core";
 
 import "@patternfly/react-core/dist/styles/base.css";
 import "@patternfly/patternfly/patternfly-addons.scss";
+import { css } from "@patternfly/react-styles";
+import navStyles from "@patternfly/react-styles/css/components/Nav/nav";
 import "../app.css";
 import logo from "../assets/logo.svg";
-import { useIsFetching } from "@tanstack/react-query";
 
 export const Route = createRootRoute({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const isFetching = useIsFetching();
+  const options = linkOptions([
+    {
+      to: "/",
+      label: "Home",
+      activeOptions: { exact: true },
+    },
+    {
+      to: "/about",
+      label: "About",
+    },
+    {
+      to: "/stringline",
+      label: "Stringlines",
+    },
+  ]);
 
   const masthead = (
     <Masthead inset={{ default: "insetLg" }}>
@@ -43,37 +61,31 @@ function RouteComponent() {
         </MastheadBrand>
       </MastheadMain>
       <MastheadContent>
-        <Toolbar>
-          <ToolbarContent>
-            <ToolbarItem>
-              <Button
-                variant="link"
-                component={(props) => <Link {...props} to="/" />}
+        <Nav variant="horizontal">
+          <NavList>
+            {options.map((option) => (
+              <NavItem
+                key={option.to}
+                to={option.to}
+                component={(props) => {
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                  const { href: to, ...linkProps } = props;
+                  return (
+                    <Link
+                      to={to as string}
+                      {...linkProps}
+                      activeProps={{
+                        className: css(navStyles.modifiers.current),
+                      }}
+                    />
+                  );
+                }}
               >
-                Home
-              </Button>
-            </ToolbarItem>
-            <ToolbarItem>
-              <Button
-                variant="link"
-                component={(props) => <Link {...props} to="/about" />}
-              >
-                About
-              </Button>
-            </ToolbarItem>
-            <ToolbarItem>
-              <Button
-                variant="link"
-                component={(props) => <Link {...props} to="/stringline" />}
-              >
-                Stringlines
-              </Button>
-            </ToolbarItem>
-            <ToolbarItem align={{ default: "alignEnd" }}>
-              {isFetching ? <Spinner size="sm" /> : null}
-            </ToolbarItem>
-          </ToolbarContent>
-        </Toolbar>
+                {option.label}
+              </NavItem>
+            ))}
+          </NavList>
+        </Nav>
       </MastheadContent>
     </Masthead>
   );

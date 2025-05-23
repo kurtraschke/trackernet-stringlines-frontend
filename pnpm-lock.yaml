@@ -20,6 +20,9 @@ importers:
       '@patternfly/react-core':
         specifier: ^6.2.2
         version: 6.2.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@patternfly/react-styles':
+        specifier: ^6.2.2
+        version: 6.2.2
       '@tanstack/react-query':
         specifier: ^5.76.1
         version: 5.76.1(react@19.1.0)
