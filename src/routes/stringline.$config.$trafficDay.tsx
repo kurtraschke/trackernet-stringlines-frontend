@@ -14,6 +14,11 @@ import ErrorComponent from "../components/ErrorComponent.tsx";
 import NotFoundComponent from "../components/NotFoundRouteComponent.tsx";
 import { dataQualityForConfiguration } from "../components/DataQuality.tsx";
 import { useIsFetching } from "@tanstack/react-query";
+import { css } from "@patternfly/react-styles";
+import sizing from "@patternfly/react-styles/css/utilities/Sizing/sizing";
+import spacing from "@patternfly/react-styles/css/utilities/Spacing/spacing";
+import alignment from "@patternfly/react-styles/css/utilities/Alignment/alignment";
+import flex from "@patternfly/react-styles/css/utilities/Flex/flex";
 
 export const Route = createFileRoute("/stringline/$config/$trafficDay")({
   component: RouteComponent,
@@ -47,9 +52,9 @@ function RouteComponent() {
   };
 
   return (
-    <Stack className={"pf-v6-u-h-100"}>
+    <Stack className={css(sizing.h_100)}>
       <StackItem>
-        <Split hasGutter className={"pf-v6-u-mb-sm"}>
+        <Split hasGutter className={css(spacing.mbSm)}>
           <SplitItem>
             <ConfigurationSelector
               selectedConfiguration={config}
@@ -62,12 +67,12 @@ function RouteComponent() {
               setSelectedTrafficDay={setSelectedTrafficDay}
             />
           </SplitItem>
-          <SplitItem className={"pf-v6-u-align-self-flex-end"}>
+          <SplitItem className={css(flex.alignSelfFlexEnd)}>
             {dataQualityForConfiguration(config)}
           </SplitItem>
           <SplitItem
             isFilled
-            className={"pf-v6-u-align-self-flex-end pf-v6-u-text-align-end"}
+            className={css(flex.alignSelfFlexEnd, alignment.textAlignEnd)}
           >
             {isFetching ? <Spinner size="md" /> : null}
           </SplitItem>

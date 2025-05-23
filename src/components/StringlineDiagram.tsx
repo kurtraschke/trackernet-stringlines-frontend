@@ -13,6 +13,8 @@ import {
 import { EmptyState, Spinner } from "@patternfly/react-core";
 import { isCurrentTrafficDay, trafficDayToTimeRange } from "../utils.ts";
 import { notFound } from "@tanstack/react-router";
+import { css } from "@patternfly/react-styles";
+import sizing from "@patternfly/react-styles/css/utilities/Sizing/sizing";
 
 interface StringlineDiagramParams {
   configurationId: number;
@@ -231,7 +233,7 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     <VegaLite
       spec={spec}
       scaleFactor={2}
-      className={"pf-v6-u-w-100 pf-v6-u-h-100"}
+      className={css(sizing.w_100, sizing.h_100)}
       data={{
         stationNames: stnData,
         lines,

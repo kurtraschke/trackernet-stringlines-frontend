@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import AboutContent from "../components/about.mdx";
+import { css } from "@patternfly/react-styles";
+import spacing from "@patternfly/react-styles/css/utilities/Spacing/spacing";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -8,7 +10,7 @@ export const Route = createFileRoute("/about")({
 
 function About() {
   return (
-    <div className={"pf-v6-u-mx-4xl"}>
+    <div className={css(spacing.mx_4xl)}>
       <AboutContent />
     </div>
   );

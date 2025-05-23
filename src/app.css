@@ -6,7 +6,10 @@ main.pf-v6-c-page__main {
   overflow-y: clip;
 }
 
-.pf-v6-c-masthead {
-  --pf-v6-c-masthead--m-display-inline--GridTemplateColumns: 6rem 1fr !important;
-  --pf-v6-c-masthead__logo--Width: 5rem !important;
+.pf-v6-c-page {
+  --pf-v6-c-page__sidebar--Width--base: 8rem;
+}
+
+header.pf-v6-c-masthead {
+  --pf-v6-c-masthead__logo--Width: 5rem;
 }
