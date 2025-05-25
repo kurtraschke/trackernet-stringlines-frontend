@@ -13,6 +13,7 @@ import { MDXProvider } from "@mdx-js/react";
 import { components } from "./components/PatternFlyMDXComponents.tsx";
 
 import { routeTree } from "./routeTree.gen";
+import customFetch from "./customFetch.ts";
 
 const hashHistory = createHashHistory();
 
@@ -39,6 +40,10 @@ const queryClient = new QueryClient({
 
 const client = createClient({
   url: import.meta.env.VITE_CLICKHOUSE_URL,
+  fetch: customFetch,
+  compression: {
+    response: true
+  }
 });
 
 const rootElement = document.getElementById("root");
