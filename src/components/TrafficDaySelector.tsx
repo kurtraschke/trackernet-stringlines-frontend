@@ -54,6 +54,7 @@ const TrafficDaySelector: React.FunctionComponent<TrafficDaySelectorParams> = ({
         }}
         validators={[rangeValidator]}
         required
+        inputProps={{id: "traffic-day"}}
       />
     </FormGroup>
   );
