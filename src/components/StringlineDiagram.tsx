@@ -179,7 +179,7 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
         axis: {
           labelExpr:
             'data("stationNames")[indexof(pluck(data("stationNames"), "station_code"), datum.value)]["station_name"]',
-          grid: true
+          grid: true,
         },
       },
       detail: {
