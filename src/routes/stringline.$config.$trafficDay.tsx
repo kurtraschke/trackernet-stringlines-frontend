@@ -24,6 +24,9 @@ export const Route = createFileRoute("/stringline/$config/$trafficDay")({
   component: RouteComponent,
   errorComponent: ErrorComponent,
   notFoundComponent: NotFoundComponent,
+  staticData: {
+    fullPage: true
+  }
 });
 
 function RouteComponent() {

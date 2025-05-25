@@ -1,8 +1,8 @@
-.pf-v6-c-page__main-body {
+.fullPage .pf-v6-c-page__main-body {
   height: 100%;
 }
 
-main.pf-v6-c-page__main {
+.fullPage main.pf-v6-c-page__main {
   overflow-y: clip;
 }
 

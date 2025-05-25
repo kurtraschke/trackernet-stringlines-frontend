@@ -3,6 +3,7 @@ import {
   Link,
   linkOptions,
   Outlet,
+  useMatches,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import {
@@ -20,7 +21,6 @@ import {
 } from "@patternfly/react-core";
 
 import "@patternfly/react-core/dist/styles/base.css";
-import "@patternfly/patternfly/patternfly-addons.scss";
 import { css } from "@patternfly/react-styles";
 import navStyles from "@patternfly/react-styles/css/components/Nav/nav";
 import "../app.css";
@@ -31,6 +31,12 @@ export const Route = createRootRoute({
 });
 
 function RouteComponent() {
+  const isFullPage = useMatches({
+    select: (matches) => {
+      return matches.slice(-1)[0].staticData.fullPage ?? false;
+    },
+  });
+
   const options = linkOptions([
     {
       to: "/",
@@ -92,8 +98,8 @@ function RouteComponent() {
 
   return (
     <>
-      <Page isContentFilled masthead={masthead}>
-        <PageSection isFilled={true}>
+      <Page isContentFilled={isFullPage} masthead={masthead} className={css(isFullPage && "fullPage")}>
+        <PageSection isFilled={isFullPage}>
           <Outlet />
         </PageSection>
       </Page>
