@@ -13,3 +13,17 @@ main.pf-v6-c-page__main {
 header.pf-v6-c-masthead {
   --pf-v6-c-masthead__logo--Width: 5rem;
 }
+
+#vg-tooltip-element table tr {
+  /*noinspection CssNoGenericFontName*/
+  font-family: var(--pf-t--global--font--family--body);
+  font-size: var(--pf-t--global--font--size--xs);
+  line-height: var(--pf-t--global--font--line-height--body);
+  color: var(--pf-t--global--text--color--regular);
+  font-weight: var(--pf-t--global--font--weight--body--default);
+}
+
+#vg-tooltip-element table tr td.key {
+  color: var(--pf-t--global--text--color--subtle);
+  font-weight: var(--pf-t--global--font--weight--heading--default);
+}
