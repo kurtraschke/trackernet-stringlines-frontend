@@ -2,7 +2,7 @@ import { VegaLite } from "react-vega";
 import { useQuery } from "@tanstack/react-query";
 import React, { use } from "react";
 import { ClickHouseContext } from "../ClickHouseContext.ts";
-import type { Temporal } from "temporal-polyfill";
+import { Temporal } from "temporal-polyfill";
 import lines from "./lines.csv";
 import type { TopLevelSpec } from "vega-lite";
 import {
@@ -15,6 +15,14 @@ import { isCurrentTrafficDay, trafficDayToTimeRange } from "../utils.ts";
 import { notFound } from "@tanstack/react-router";
 import { css } from "@patternfly/react-styles";
 import sizing from "@patternfly/react-styles/css/utilities/Sizing/sizing";
+
+const currentTrafficDayStaleTime = Temporal.Duration.from("PT1M").total({
+  unit: "millisecond",
+});
+
+const currentTrafficDayRefreshInterval = Temporal.Duration.from("PT1M").total({
+  unit: "millisecond",
+});
 
 interface StringlineDiagramParams {
   configurationId: number;
@@ -49,8 +57,8 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     throw new Error("Error loading configuration details", { cause: cdError });
   }
 
-  const staleTime = isCurrentTrafficDay(trafficDay) ? 60 * 1000 : Infinity;
-  const refreshInterval = isCurrentTrafficDay(trafficDay) ? 60 * 1000 : false;
+  const staleTime = isCurrentTrafficDay(trafficDay) ? currentTrafficDayStaleTime : Infinity;
+  const refreshInterval = isCurrentTrafficDay(trafficDay) ? currentTrafficDayRefreshInterval : false;
 
   const {
     isPending: stlIsPending,

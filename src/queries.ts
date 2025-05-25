@@ -9,6 +9,10 @@ interface Configuration {
   name: string;
 }
 
+const configurationsQueryStaleTime = Temporal.Duration.from("PT5M").total({
+  unit: "milliseconds",
+});
+
 export function configurationsQuery(client: WebClickHouseClient) {
   return queryOptions({
     queryKey: ["configurations"],
@@ -22,7 +26,7 @@ export function configurationsQuery(client: WebClickHouseClient) {
           abort_signal: signal,
         })
         .then((rs) => rs.json<Configuration>()),
-    staleTime: 5 * 60 * 1000,
+    staleTime: configurationsQueryStaleTime,
   });
 }
 
@@ -30,6 +34,10 @@ interface StationName {
   station_code: string;
   station_name: string;
 }
+
+const stationNamesQueryStaleTime = Temporal.Duration.from("PT24H").total({
+  unit: "milliseconds",
+});
 
 export function stationNamesQuery(client: WebClickHouseClient) {
   return queryOptions({
@@ -43,7 +51,7 @@ export function stationNamesQuery(client: WebClickHouseClient) {
           abort_signal: signal,
         })
         .then((rs) => rs.json<StationName>()),
-    staleTime: 24 * 60 * 60 * 1000,
+    staleTime: stationNamesQueryStaleTime,
   });
 }
 
@@ -53,6 +61,10 @@ interface ConfigurationDetails {
   direction: number;
   station_codes: string[];
 }
+
+const configurationDetailsQueryStaleTime = Temporal.Duration.from("PT5M").total(
+  { unit: "milliseconds" },
+);
 
 export function configurationDetailsQuery(
   client: WebClickHouseClient,
@@ -74,7 +86,7 @@ export function configurationDetailsQuery(
         })
         .then((rs) => rs.json<ConfigurationDetails>()),
     select: (data) => data[0],
-    staleTime: 5 * 60 * 1000,
+    staleTime: configurationDetailsQueryStaleTime,
   });
 }
 
@@ -121,6 +133,10 @@ interface DateRange {
   end: Temporal.PlainDate;
 }
 
+const validTrafficDaysQueryStaleTime = Temporal.Duration.from("PT1M").total({
+  unit: "milliseconds",
+});
+
 export function validTrafficDaysQuery(client: WebClickHouseClient) {
   interface Data {
     first_traffic_day: string;
@@ -145,12 +161,17 @@ export function validTrafficDaysQuery(client: WebClickHouseClient) {
         end: Temporal.PlainDate.from(last_traffic_day),
       };
     },
+    staleTime: validTrafficDaysQueryStaleTime,
   });
 }
 
 interface Disclaimer {
   disclaimer: string;
 }
+
+const disclaimerQueryStaleTime = Temporal.Duration.from("PT24H").total({
+  unit: "milliseconds",
+});
 
 export function disclaimerQuery(client: WebClickHouseClient) {
   return queryOptions({
@@ -165,6 +186,6 @@ export function disclaimerQuery(client: WebClickHouseClient) {
         })
         .then((rs) => rs.json<Disclaimer>()),
     select: (rows) => rows[0].disclaimer,
-    staleTime: 24 * 60 * 60 * 1000,
+    staleTime: disclaimerQueryStaleTime,
   });
 }
