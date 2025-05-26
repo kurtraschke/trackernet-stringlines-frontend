@@ -32,7 +32,7 @@
     "@rollup/plugin-dsv": "^3.0.5",
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@tanstack/eslint-plugin-router": "^1.115.0",
-    "@tanstack/router-plugin": "^1.120.7",
+    "@tanstack/router-plugin": "^1.120.10",
     "@types/mdx": "^2.0.13",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.2",
