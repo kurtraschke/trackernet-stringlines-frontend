@@ -10,8 +10,8 @@ const bakerloo = (
         Data quality for Bakerloo Line trips is generally <em>good</em>. London
         Overground trips between Queen's Park and Watford Junction do not appear
         here as they cannot be uniquely identified based on data in the
-        Trackernet API (their headcodes are not passed through and they do not
-        have unique trip numbers).
+        Trackernet API (the API neither assigns unique trip numbers nor passes
+        through their headcodes).
       </div>
     }
   />
@@ -31,7 +31,7 @@ const central = (
   />
 );
 
-const met = (
+const ssr = (
   <DataQuality
     status={"warning"}
     labelText={"Data quality mixed"}
@@ -39,10 +39,11 @@ const met = (
     bodyContent={
       <div>
         Data quality on all Sub-Surface Railway lines in CBTC territory is
-        fairly good. However, outside CBTC territory, the quality is quite poor.
-        Trains generally lose their trip numbers, which prevents unique
-        identification of trips. Trains sometimes also retain the same trip
-        number despite having reversed at a terminal.
+        fairly good. However, beyond Wembley Park, outside CBTC territory,
+        the quality is quite poor. Trains generally lose their trip numbers,
+        which prevents unique identification of trips.
+        Trains sometimes also retain the same trip number despite having
+        reversed at a terminal.
       </div>
     }
   />
@@ -62,6 +63,35 @@ const jubilee = (
   />
 );
 
+const northern = (
+  <DataQuality
+    status={"success"}
+    labelText={"Data quality good"}
+    headerContent={<div>Data quality generally good</div>}
+    bodyContent={
+      <div>
+        Data quality on the Northern Line is generally good. However, the
+        current chart layout leaves much to be desired.
+      </div>
+    }
+  />
+);
+
+const picc = (
+  <DataQuality
+    status={"info"}
+    labelText={"Data quality fair"}
+    headerContent={<div>Data quality fair</div>}
+    bodyContent={
+      <div>
+        Data quality for the Piccadilly Line is fair.  It is good enough to get a
+        general sense of the performance of the line, but there are sporadic
+        anomalies.
+      </div>
+    }
+  />
+);
+
 const victoria = (
   <DataQuality
     status={"success"}
@@ -71,7 +101,8 @@ const victoria = (
       <div>
         Data quality on the Victoria Line is <em>very good</em>. The main issue
         is that we do not get actuals (i.e. an "At" location) for the termini,
-        so the last event for a trip will be "Between Stockwell and Brixton" or
+        so the last event for a trip will usually be
+        "Between Stockwell and Brixton" or
         "Between Blackhorse Road and Walthamstow Central".
       </div>
     }
@@ -99,15 +130,23 @@ const dataQualityByConfiguration = new Map(
     "101": bakerloo,
     "200": central,
     "201": central,
+    "300": ssr,
+    "301": ssr,
+    "400": ssr,
+    "401": ssr,
     "500": jubilee,
     "501": jubilee,
-    "600": met,
-    "601": met,
+    "600": ssr,
+    "601": ssr,
+    "700": northern,
+    "701": northern,
+    "800": picc,
+    "801": picc,
     "900": victoria,
     "901": victoria,
     "1000": drain,
-    "1001": drain,
-  }),
+    "1001": drain
+  })
 );
 
 function dataQualityForConfiguration(configurationId: string) {
