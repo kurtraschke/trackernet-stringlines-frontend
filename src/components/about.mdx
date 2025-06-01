@@ -1,19 +1,74 @@
 import Disclaimer from "./Disclaimer.js";
 import AppVersion from "./AppVersion.js";
+import { css } from "@patternfly/react-styles";
+import btv1b531360656_1 from "../assets/about/btv1b531360656_1.webp";
+import sizing from "@patternfly/react-styles/css/utilities/Sizing/sizing";
+import boxShadow from "@patternfly/react-styles/css/utilities/BoxShadow/box-shadow";
+import spacing from "@patternfly/react-styles/css/utilities/Spacing/spacing";
+import float from "@patternfly/react-styles/css/utilities/Float/float";
+import text from "@patternfly/react-styles/css/utilities/Text/text";
 
 # About
 
-{/*The stringline chart, time-space diagram, or Marey chart is an essential tool in transportation service management. By plotting the linear progress of a trip over time, it
+This site uses data from the London Underground Trackernet API to generate real-time stringline charts for the London Underground.
 
-When trying to understand an unknown line, a stringline chart can quickly answer many questions: How often do trips run? What stopping patterns do they follow? Where do routes merge and diverge from a common trunk?*/}
+The stringline chart (variously known as a [time-distance diagram](https://en.wikipedia.org/wiki/Time%E2%80%93distance_diagram?useskin=vector), train graph, or Marey chart) is an essential tool in transportation planning and service management; first developed by [Charles Ibry](https://en.wikipedia.org/wiki/Charles_Ibry?useskin=vector) (or Ybry) in mid-1800s France, then popularized by [Étienne-Jules Marey](https://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey?useskin=vector) slightly later in the 1800s and later popularized again by [Edward Tufte](https://www.edwardtufte.com/) beginning in the 1990s, it is a devilishly simple tool: each line on the graph represents one train (or bus, or other vehicle...), with time on one axis and the stops along the route on the other.
 
-This site uses data from the London Underground Trackernet API to generate stringline charts for the London Underground.
+<div className={css(sizing.w_33,float.floatInlineEnd,spacing.mMd)}>
+    <a href="https://gallica.bnf.fr/ark:/12148/btv1b531360656">
+        <img className={css(boxShadow.boxShadowMd)} src={btv1b531360656_1} />
+        <span className={css(text.fontSizeSm)}>Ligne de Paris à Boulogne : service du 1er août 1852, Bibliothèque nationale de France</span>
+    </a>
+</div>
+
+Yet despite its simplicity, a brief glance at a stringline diagram can easily answer many questions, beginning with these basic parameters:
+
+ * How often do trips run?
+ * What stopping patterns do they follow?
+ * Are some trips faster than others? Slower?
+ * Do trips overtake others?
+ * Where do routes merge and diverge from a common trunk?
+
+With additional data, it is also possible to answer questions about the assignment of vehicles to trips—do vehicles follow the same service pattern throughout the same service day? Where do they enter and exit service?
+
+Using a stringline diagram with static data (such as during timetable development) can clearly show things like trains being asked to make impossible moves which will always produce conflicts, or unrealistically long or short running times.
+
+Where stringline diagrams really shine, though, is when a line suffers a disruption—either an acute incident, or the sort of "clear air turbulence" that sometimes plagues routes, where the service is clearly not quite right, but there is not a single acute incident to blame. Gaps in service, delays, bunching, and other maladies then become readily apparent. Plotting a stringline diagram in real-time makes it possible to follow the evolution of an incident and service recovery and answer a range of useful questions:
+
+ * Are trains losing time _between_ stations, _at_ stations, or both?
+ * Are merge conflicts delaying trains?
+ * Are the problems affecting a few isolated trains on the line, or every trip?
+ * Is the problem isolated to a single location, or a small number of locations, or has the entire line been affected?
+ * What service control actions are being taken?
+ * Are trains being short-turned or taken out of service?
+ * Are trains skipping stops?
+ * Are trains being diverted to other lines (where possible)?
+
+These are the sorts of questions (and many more) which can be answered with a real-time stringline tool such as this one. See the [How To Use](/howto) page for additional details on using the tool.
+
+## Related Resources
+
+* [Historical Infographics: From Paris with Love](https://sandrarendgen.wordpress.com/2019/03/15/data-trails-from-paris-with-love/)
+* [Visualising Changes to Rail Services](https://chriszetter.com/blog/2018/05/11/visualizing-changes-to-rail-services/)
+* [Visualizing MBTA Data](https://mbtaviz.github.io/)
+* [How the Circle Line rogue train was caught with data](https://medium.com/datagovsg-blog/how-we-caught-the-circle-line-rogue-train-with-data-79405c86ab6a)
+* [NYC Subway Stringlines](https://pvibien.com/stringline.htm)
+* [Development of a Real-Time Stringlines Tool to Visualize Subway Operations and Manage Service at New York City Transit](https://doi.org/10.3141/2538-03)
+* [La méthode graphique dans les sciences expérimentales et principalement en physiologie et en médicine](https://archive.org/details/lamthodegraphiq00maregoog/page/n51/mode/2up)
+
+<div style={{clear: 'both'}} />
 
 ## Disclaimer
+
+This site is not affiliated with Transport for London or any other agency or operator.
 
 The following disclaimer is provided by the Trackernet API:
 
 <Disclaimer />
+
+## Contact
+
+[`contact@choochoo.systems`](mailto:contact@choochoo.systems)
 
 ### Version
 
