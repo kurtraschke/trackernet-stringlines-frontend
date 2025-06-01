@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as HowtoImport } from './routes/howto'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as StringlineIndexImport } from './routes/stringline.index'
@@ -19,6 +20,12 @@ import { Route as StringlineConfigTodayImport } from './routes/stringline.$confi
 import { Route as StringlineConfigTrafficDayImport } from './routes/stringline.$config.$trafficDay'
 
 // Create/Update Routes
+
+const HowtoRoute = HowtoImport.update({
+  id: '/howto',
+  path: '/howto',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -76,6 +83,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/howto': {
+      id: '/howto'
+      path: '/howto'
+      fullPath: '/howto'
+      preLoaderRoute: typeof HowtoImport
+      parentRoute: typeof rootRoute
+    }
     '/stringline/': {
       id: '/stringline/'
       path: '/stringline'
@@ -112,6 +126,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/howto': typeof HowtoRoute
   '/stringline': typeof StringlineIndexRoute
   '/stringline/$config/$trafficDay': typeof StringlineConfigTrafficDayRoute
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
@@ -121,6 +136,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/howto': typeof HowtoRoute
   '/stringline': typeof StringlineIndexRoute
   '/stringline/$config/$trafficDay': typeof StringlineConfigTrafficDayRoute
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
@@ -131,6 +147,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/howto': typeof HowtoRoute
   '/stringline/': typeof StringlineIndexRoute
   '/stringline/$config/$trafficDay': typeof StringlineConfigTrafficDayRoute
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
@@ -142,6 +159,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/howto'
     | '/stringline'
     | '/stringline/$config/$trafficDay'
     | '/stringline/$config/today'
@@ -150,6 +168,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/howto'
     | '/stringline'
     | '/stringline/$config/$trafficDay'
     | '/stringline/$config/today'
@@ -158,6 +177,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/howto'
     | '/stringline/'
     | '/stringline/$config/$trafficDay'
     | '/stringline/$config/today'
@@ -168,6 +188,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  HowtoRoute: typeof HowtoRoute
   StringlineIndexRoute: typeof StringlineIndexRoute
   StringlineConfigTrafficDayRoute: typeof StringlineConfigTrafficDayRoute
   StringlineConfigTodayRoute: typeof StringlineConfigTodayRoute
@@ -177,6 +198,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  HowtoRoute: HowtoRoute,
   StringlineIndexRoute: StringlineIndexRoute,
   StringlineConfigTrafficDayRoute: StringlineConfigTrafficDayRoute,
   StringlineConfigTodayRoute: StringlineConfigTodayRoute,
@@ -195,6 +217,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/howto",
         "/stringline/",
         "/stringline/$config/$trafficDay",
         "/stringline/$config/today",
@@ -206,6 +229,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/howto": {
+      "filePath": "howto.tsx"
     },
     "/stringline/": {
       "filePath": "stringline.index.tsx"

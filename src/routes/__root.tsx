@@ -48,6 +48,10 @@ function RouteComponent() {
       label: "About",
     },
     {
+      to: "/howto",
+      label: "How To Use"
+    },
+    {
       to: "/stringline",
       label: "Stringlines",
     },
