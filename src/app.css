@@ -14,6 +14,10 @@ header.pf-v6-c-masthead {
   --pf-v6-c-masthead__logo--Width: 5rem;
 }
 
+.pf-v6-c-button.pf-m-link.pf-m-inline {
+  user-select: auto;
+}
+
 #vg-tooltip-element table tr {
   /*noinspection CssNoGenericFontName*/
   font-family: var(--pf-t--global--font--family--body);
