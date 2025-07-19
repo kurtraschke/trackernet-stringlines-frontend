@@ -8,120 +8,52 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as HowtoRouteImport } from './routes/howto'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as StringlineIndexRouteImport } from './routes/stringline.index'
+import { Route as StringlineConfigYesterdayRouteImport } from './routes/stringline.$config.yesterday'
+import { Route as StringlineConfigTodayRouteImport } from './routes/stringline.$config.today'
+import { Route as StringlineConfigTrafficDayRouteImport } from './routes/stringline.$config.$trafficDay'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as HowtoImport } from './routes/howto'
-import { Route as AboutImport } from './routes/about'
-import { Route as IndexImport } from './routes/index'
-import { Route as StringlineIndexImport } from './routes/stringline.index'
-import { Route as StringlineConfigYesterdayImport } from './routes/stringline.$config.yesterday'
-import { Route as StringlineConfigTodayImport } from './routes/stringline.$config.today'
-import { Route as StringlineConfigTrafficDayImport } from './routes/stringline.$config.$trafficDay'
-
-// Create/Update Routes
-
-const HowtoRoute = HowtoImport.update({
+const HowtoRoute = HowtoRouteImport.update({
   id: '/howto',
   path: '/howto',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const AboutRoute = AboutImport.update({
+const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const StringlineIndexRoute = StringlineIndexImport.update({
+const StringlineIndexRoute = StringlineIndexRouteImport.update({
   id: '/stringline/',
   path: '/stringline/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const StringlineConfigYesterdayRoute = StringlineConfigYesterdayImport.update({
-  id: '/stringline/$config/yesterday',
-  path: '/stringline/$config/yesterday',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const StringlineConfigTodayRoute = StringlineConfigTodayImport.update({
+const StringlineConfigYesterdayRoute =
+  StringlineConfigYesterdayRouteImport.update({
+    id: '/stringline/$config/yesterday',
+    path: '/stringline/$config/yesterday',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const StringlineConfigTodayRoute = StringlineConfigTodayRouteImport.update({
   id: '/stringline/$config/today',
   path: '/stringline/$config/today',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const StringlineConfigTrafficDayRoute = StringlineConfigTrafficDayImport.update(
-  {
+const StringlineConfigTrafficDayRoute =
+  StringlineConfigTrafficDayRouteImport.update({
     id: '/stringline/$config/$trafficDay',
     path: '/stringline/$config/$trafficDay',
-    getParentRoute: () => rootRoute,
-  } as any,
-)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
-    '/howto': {
-      id: '/howto'
-      path: '/howto'
-      fullPath: '/howto'
-      preLoaderRoute: typeof HowtoImport
-      parentRoute: typeof rootRoute
-    }
-    '/stringline/': {
-      id: '/stringline/'
-      path: '/stringline'
-      fullPath: '/stringline'
-      preLoaderRoute: typeof StringlineIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/stringline/$config/$trafficDay': {
-      id: '/stringline/$config/$trafficDay'
-      path: '/stringline/$config/$trafficDay'
-      fullPath: '/stringline/$config/$trafficDay'
-      preLoaderRoute: typeof StringlineConfigTrafficDayImport
-      parentRoute: typeof rootRoute
-    }
-    '/stringline/$config/today': {
-      id: '/stringline/$config/today'
-      path: '/stringline/$config/today'
-      fullPath: '/stringline/$config/today'
-      preLoaderRoute: typeof StringlineConfigTodayImport
-      parentRoute: typeof rootRoute
-    }
-    '/stringline/$config/yesterday': {
-      id: '/stringline/$config/yesterday'
-      path: '/stringline/$config/yesterday'
-      fullPath: '/stringline/$config/yesterday'
-      preLoaderRoute: typeof StringlineConfigYesterdayImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -132,7 +64,6 @@ export interface FileRoutesByFullPath {
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
   '/stringline/$config/yesterday': typeof StringlineConfigYesterdayRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
@@ -142,9 +73,8 @@ export interface FileRoutesByTo {
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
   '/stringline/$config/yesterday': typeof StringlineConfigYesterdayRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/howto': typeof HowtoRoute
@@ -153,7 +83,6 @@ export interface FileRoutesById {
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
   '/stringline/$config/yesterday': typeof StringlineConfigYesterdayRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -184,7 +113,6 @@ export interface FileRouteTypes {
     | '/stringline/$config/yesterday'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
@@ -193,6 +121,60 @@ export interface RootRouteChildren {
   StringlineConfigTrafficDayRoute: typeof StringlineConfigTrafficDayRoute
   StringlineConfigTodayRoute: typeof StringlineConfigTodayRoute
   StringlineConfigYesterdayRoute: typeof StringlineConfigYesterdayRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/howto': {
+      id: '/howto'
+      path: '/howto'
+      fullPath: '/howto'
+      preLoaderRoute: typeof HowtoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stringline/': {
+      id: '/stringline/'
+      path: '/stringline'
+      fullPath: '/stringline'
+      preLoaderRoute: typeof StringlineIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stringline/$config/yesterday': {
+      id: '/stringline/$config/yesterday'
+      path: '/stringline/$config/yesterday'
+      fullPath: '/stringline/$config/yesterday'
+      preLoaderRoute: typeof StringlineConfigYesterdayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stringline/$config/today': {
+      id: '/stringline/$config/today'
+      path: '/stringline/$config/today'
+      fullPath: '/stringline/$config/today'
+      preLoaderRoute: typeof StringlineConfigTodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stringline/$config/$trafficDay': {
+      id: '/stringline/$config/$trafficDay'
+      path: '/stringline/$config/$trafficDay'
+      fullPath: '/stringline/$config/$trafficDay'
+      preLoaderRoute: typeof StringlineConfigTrafficDayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -204,47 +186,6 @@ const rootRouteChildren: RootRouteChildren = {
   StringlineConfigTodayRoute: StringlineConfigTodayRoute,
   StringlineConfigYesterdayRoute: StringlineConfigYesterdayRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/about",
-        "/howto",
-        "/stringline/",
-        "/stringline/$config/$trafficDay",
-        "/stringline/$config/today",
-        "/stringline/$config/yesterday"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/about": {
-      "filePath": "about.tsx"
-    },
-    "/howto": {
-      "filePath": "howto.tsx"
-    },
-    "/stringline/": {
-      "filePath": "stringline.index.tsx"
-    },
-    "/stringline/$config/$trafficDay": {
-      "filePath": "stringline.$config.$trafficDay.tsx"
-    },
-    "/stringline/$config/today": {
-      "filePath": "stringline.$config.today.tsx"
-    },
-    "/stringline/$config/yesterday": {
-      "filePath": "stringline.$config.yesterday.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
