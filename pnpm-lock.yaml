@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@clickhouse/client-web':
-        specifier: ^1.11.2
-        version: 1.11.2
+        specifier: ^1.12.0
+        version: 1.12.0
       '@mdx-js/react':
         specifier: ^3.1.0
         version: 3.1.0(@types/react@19.1.8)(react@19.1.0)
@@ -276,11 +276,11 @@ packages:
   '@bufbuild/protobuf@2.6.1':
     resolution: {integrity: sha512-DaG6XlyKpz08bmHY5SGX2gfIllaqtDJ/KwVoxsmP22COOLYwDBe7yD3DZGwXem/Xq7QOc9cuR7R3MpAv5CFfDw==}
 
-  '@clickhouse/client-common@1.11.2':
-    resolution: {integrity: sha512-H4ECHqaipzMgiZKqpb1Z4N3Ofq+lVTCn8I59XsSynqrsfR4jWZD3PipXVvIzMpDmTMvrlJWrOwAdm0DMNiMQbA==}
+  '@clickhouse/client-common@1.12.0':
+    resolution: {integrity: sha512-cyI4n7u9jK30d9q1q0ceQ7IwJ/MtTs5HxoQfc8yHpN+ok5wqaU2jAtq5hpa1z7C7sS1pDy/ZOFmOzg1v1F683g==}
 
-  '@clickhouse/client-web@1.11.2':
-    resolution: {integrity: sha512-VyV0Wx/EZKJwKRgujc9ve8ad7+pVgXOIlCJsGltzU1h6bW7pQKWEAD9Y7eHWkbN3+6nokxUPDgQI0w0BWym6MQ==}
+  '@clickhouse/client-web@1.12.0':
+    resolution: {integrity: sha512-LAcGwHzFnzaN1uxy99zwEPOVw75I+1kGTc0X0TdIGfOdQ2xuBwR0iJ6xS8DELwsJTU2FmBH9AEfreqxgNHvt9Q==}
 
   '@esbuild/aix-ppc64@0.25.4':
     resolution: {integrity: sha512-1VCICWypeQKhVbE9oW/sJaAmjLxhVqacdkvPLEjwlttjfwENRSClS8EjBz0KzRyFSCPDIkuXW34Je/vk7zdB7Q==}
@@ -2947,11 +2947,11 @@ snapshots:
 
   '@bufbuild/protobuf@2.6.1': {}
 
-  '@clickhouse/client-common@1.11.2': {}
+  '@clickhouse/client-common@1.12.0': {}
 
-  '@clickhouse/client-web@1.11.2':
+  '@clickhouse/client-web@1.12.0':
     dependencies:
-      '@clickhouse/client-common': 1.11.2
+      '@clickhouse/client-common': 1.12.0
 
   '@esbuild/aix-ppc64@0.25.4':
     optional: true
