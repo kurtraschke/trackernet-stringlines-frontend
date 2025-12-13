@@ -54,7 +54,12 @@
   "pnpm": {
     "overrides": {
       "react-vega@7>vega-embed": "^7.0.2"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild"
+    ]
   },
   "packageManager": "pnpm@10.25.0"
 }
