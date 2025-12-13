@@ -11,9 +11,6 @@ importers:
 
   .:
     dependencies:
-      '@clickhouse/client-web':
-        specifier: ^1.14.0
-        version: 1.14.0
       '@mdx-js/react':
         specifier: ^3.1.1
         version: 3.1.1(@types/react@19.2.7)(react@19.2.3)
@@ -264,12 +261,6 @@ packages:
 
   '@bufbuild/protobuf@2.6.1':
     resolution: {integrity: sha512-DaG6XlyKpz08bmHY5SGX2gfIllaqtDJ/KwVoxsmP22COOLYwDBe7yD3DZGwXem/Xq7QOc9cuR7R3MpAv5CFfDw==}
-
-  '@clickhouse/client-common@1.14.0':
-    resolution: {integrity: sha512-CyUcv2iCkZ1A++vmOSufYRpHR3aAWVfbrWed7ATzf0yyx/BW/2SEqlL07vBpSRa3BIkQe/DSOHVv8JkWZpUOwQ==}
-
-  '@clickhouse/client-web@1.14.0':
-    resolution: {integrity: sha512-RX+X1ac0Yy2ncspkM4Snlodtc3yol83zs0wYKlmDTN/CeZn0zY4UWNq8FHDZ6tZ6bd4PjrQaMb1QbG9M/UMWnQ==}
 
   '@esbuild/aix-ppc64@0.25.4':
     resolution: {integrity: sha512-1VCICWypeQKhVbE9oW/sJaAmjLxhVqacdkvPLEjwlttjfwENRSClS8EjBz0KzRyFSCPDIkuXW34Je/vk7zdB7Q==}
@@ -3004,12 +2995,6 @@ snapshots:
       '@babel/helper-validator-identifier': 7.27.1
 
   '@bufbuild/protobuf@2.6.1': {}
-
-  '@clickhouse/client-common@1.14.0': {}
-
-  '@clickhouse/client-web@1.14.0':
-    dependencies:
-      '@clickhouse/client-common': 1.14.0
 
   '@esbuild/aix-ppc64@0.25.4':
     optional: true

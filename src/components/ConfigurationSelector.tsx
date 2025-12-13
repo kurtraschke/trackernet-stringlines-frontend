@@ -1,5 +1,4 @@
-import React, { use } from "react";
-import { ClickHouseContext } from "../ClickHouseContext.ts";
+import React from "react";
 import {
   FormGroup,
   FormSelect,
@@ -17,11 +16,7 @@ interface ConfigurationSelectorParams {
 const ConfigurationSelector: React.FunctionComponent<
   ConfigurationSelectorParams
 > = ({ selectedConfiguration, onChangeConfiguration }) => {
-  const client = use(ClickHouseContext);
-
-  const { isPending, isError, data, error } = useQuery(
-    configurationsQuery(client),
-  );
+  const { isPending, isError, data, error } = useQuery(configurationsQuery());
 
   if (isPending) {
     return <Spinner size="md" />;

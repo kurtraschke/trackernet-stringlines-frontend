@@ -1,7 +1,6 @@
 import { VegaLite } from "react-vega";
 import { useQuery } from "@tanstack/react-query";
-import React, { use } from "react";
-import { ClickHouseContext } from "../ClickHouseContext.ts";
+import React from "react";
 import { Temporal } from "temporal-polyfill";
 import lines from "./lines.csv";
 import type { TopLevelSpec } from "vega-lite";
@@ -33,14 +32,12 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
   configurationId,
   trafficDay,
 }) => {
-  const client = use(ClickHouseContext);
-
   const {
     isPending: stnIsPending,
     isError: stnIsError,
     data: stnData,
     error: stnError,
-  } = useQuery(stationNamesQuery(client));
+  } = useQuery(stationNamesQuery());
 
   if (stnIsError) {
     throw new Error("Error loading station names", { cause: stnError });
@@ -51,14 +48,18 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     isError: cdIsError,
     data: cdData,
     error: cdError,
-  } = useQuery(configurationDetailsQuery(client, configurationId));
+  } = useQuery(configurationDetailsQuery(configurationId));
 
   if (cdIsError) {
     throw new Error("Error loading configuration details", { cause: cdError });
   }
 
-  const staleTime = isCurrentTrafficDay(trafficDay) ? currentTrafficDayStaleTime : Infinity;
-  const refreshInterval = isCurrentTrafficDay(trafficDay) ? currentTrafficDayRefreshInterval : false;
+  const staleTime = isCurrentTrafficDay(trafficDay)
+    ? currentTrafficDayStaleTime
+    : Infinity;
+  const refreshInterval = isCurrentTrafficDay(trafficDay)
+    ? currentTrafficDayRefreshInterval
+    : false;
 
   const {
     isPending: stlIsPending,
@@ -66,7 +67,7 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     data: stlData,
     error: stlError,
   } = useQuery({
-    ...stringlineQuery(client, configurationId, trafficDay),
+    ...stringlineQuery(configurationId, trafficDay),
     staleTime: staleTime,
     refetchInterval: refreshInterval,
     refetchIntervalInBackground: false,

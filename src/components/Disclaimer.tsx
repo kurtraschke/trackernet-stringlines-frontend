@@ -1,5 +1,4 @@
-import React, { use } from "react";
-import { ClickHouseContext } from "../ClickHouseContext.ts";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { disclaimerQuery } from "../queries.ts";
 import {
@@ -11,9 +10,7 @@ import {
 } from "@patternfly/react-core";
 
 const Disclaimer: React.FunctionComponent = () => {
-  const client = use(ClickHouseContext);
-
-  const { isPending, isError, data, error } = useQuery(disclaimerQuery(client));
+  const { isPending, isError, data, error } = useQuery(disclaimerQuery());
 
   if (isError) {
     return (

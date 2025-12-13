@@ -2,7 +2,6 @@
 
 import { Temporal } from "temporal-polyfill";
 import { queryOptions } from "@tanstack/react-query";
-import type { WebClickHouseClient } from "@clickhouse/client-web/dist/client";
 
 interface Configuration {
   id: number;
@@ -13,19 +12,23 @@ const configurationsQueryStaleTime = Temporal.Duration.from("PT5M").total({
   unit: "milliseconds",
 });
 
-export function configurationsQuery(client: WebClickHouseClient) {
+export function configurationsQuery() {
   return queryOptions({
     queryKey: ["configurations"],
-    queryFn: ({ signal }) =>
-      client
-        .query({
-          query: `SELECT id, name
-                  FROM v_web_configurations`,
-          format: "JSONEachRow",
-          clickhouse_settings: { output_format_json_quote_64bit_integers: 0 },
-          abort_signal: signal,
-        })
-        .then((rs) => rs.json<Configuration>()),
+    queryFn: async ({ signal }) => {
+      const endpoint = new URL(
+        "trackernet_stringline_configurations",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return (await response.json()) as Configuration[];
+    },
     staleTime: configurationsQueryStaleTime,
   });
 }
@@ -39,18 +42,23 @@ const stationNamesQueryStaleTime = Temporal.Duration.from("PT24H").total({
   unit: "milliseconds",
 });
 
-export function stationNamesQuery(client: WebClickHouseClient) {
+export function stationNamesQuery() {
   return queryOptions({
     queryKey: ["stationNames"],
-    queryFn: ({ signal }) =>
-      client
-        .query({
-          query: `SELECT station_code, station_name
-                  FROM v_web_station_names`,
-          format: "JSONEachRow",
-          abort_signal: signal,
-        })
-        .then((rs) => rs.json<StationName>()),
+    queryFn: async ({ signal }) => {
+      const endpoint = new URL(
+        "trackernet_station_names",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return (await response.json()) as StationName[];
+    },
     staleTime: stationNamesQueryStaleTime,
   });
 }
@@ -66,25 +74,25 @@ const configurationDetailsQueryStaleTime = Temporal.Duration.from("PT5M").total(
   { unit: "milliseconds" },
 );
 
-export function configurationDetailsQuery(
-  client: WebClickHouseClient,
-  configurationId: number,
-) {
+export function configurationDetailsQuery(configurationId: number) {
   return queryOptions({
     queryKey: ["configurationDetails", configurationId],
-    queryFn: ({ signal, queryKey: [, configurationId] }) =>
-      client
-        .query({
-          query: `SELECT id, name, direction, station_codes
-                  FROM v_web_configuration_details(p_configuration_id={configuration_id: UInt64})`,
-          format: "JSONEachRow",
-          clickhouse_settings: { output_format_json_quote_64bit_integers: 0 },
-          abort_signal: signal,
-          query_params: {
-            configuration_id: configurationId,
-          },
-        })
-        .then((rs) => rs.json<ConfigurationDetails>()),
+    queryFn: async ({ signal, queryKey: [, configurationId] }) => {
+      const endpoint = new URL(
+        "trackernet_stringline_configuration_details",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      endpoint.searchParams.set("configuration_id", configurationId.toString());
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return (await response.json()) as ConfigurationDetails[];
+    },
     select: (data) => data[0],
     staleTime: configurationDetailsQueryStaleTime,
   });
@@ -103,28 +111,33 @@ interface StringlineDatum {
 }
 
 export function stringlineQuery(
-  client: WebClickHouseClient,
   configurationId: number,
   trafficDay: Temporal.PlainDate,
 ) {
   return queryOptions({
     queryKey: ["stringline", configurationId, trafficDay],
-    queryFn: ({ signal, queryKey: [, configurationId, trafficDay] }) =>
-      client
-        .query({
-          query: `SELECT line_code, set, trip, station_code, destination, 
-                         arrival_time, fetch_time, generated_timestamp, location, leading_car_number
-                  FROM v_web_stringline(p_traffic_day={traffic_day: Date}, p_configuration_id={configuration_id: UInt64})`,
-          format: "JSONEachRow",
-          abort_signal: signal,
-          query_params: {
-            traffic_day: (trafficDay as Temporal.PlainDate).toString({
-              calendarName: "never",
-            }),
-            configuration_id: configurationId,
-          },
-        })
-        .then((rs) => rs.json<StringlineDatum>()),
+    queryFn: async ({ signal, queryKey: [, configurationId, trafficDay] }) => {
+      const endpoint = new URL(
+        "trackernet_stringlines",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      endpoint.searchParams.set("configuration_id", configurationId.toString());
+      endpoint.searchParams.set(
+        "traffic_day",
+        (trafficDay as Temporal.PlainDate).toString({
+          calendarName: "never",
+        }),
+      );
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return (await response.json()) as StringlineDatum[];
+      },
   });
 }
 
@@ -137,7 +150,7 @@ const validTrafficDaysQueryStaleTime = Temporal.Duration.from("PT1M").total({
   unit: "milliseconds",
 });
 
-export function validTrafficDaysQuery(client: WebClickHouseClient) {
+export function validTrafficDaysQuery() {
   interface Data {
     first_traffic_day: string;
     last_traffic_day: string;
@@ -145,15 +158,20 @@ export function validTrafficDaysQuery(client: WebClickHouseClient) {
 
   return queryOptions({
     queryKey: ["validTrafficDays"],
-    queryFn: ({ signal }) =>
-      client
-        .query({
-          query: `SELECT first_traffic_day, last_traffic_day
-                  FROM v_web_valid_traffic_days`,
-          format: "JSONEachRow",
-          abort_signal: signal,
-        })
-        .then((rs) => rs.json<Data>()),
+    queryFn: async ({ signal }) => {
+      const endpoint = new URL(
+        "trackernet_valid_traffic_days",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return (await response.json()) as Data[];
+    },
     select: (data): DateRange => {
       const { first_traffic_day, last_traffic_day } = data[0];
       return {
@@ -165,27 +183,27 @@ export function validTrafficDaysQuery(client: WebClickHouseClient) {
   });
 }
 
-interface Disclaimer {
-  disclaimer: string;
-}
-
 const disclaimerQueryStaleTime = Temporal.Duration.from("PT24H").total({
   unit: "milliseconds",
 });
 
-export function disclaimerQuery(client: WebClickHouseClient) {
+export function disclaimerQuery() {
   return queryOptions({
     queryKey: ["disclaimer"],
-    queryFn: ({ signal }) =>
-      client
-        .query({
-          query: `SELECT disclaimer
-                  FROM v_web_disclaimer`,
-          format: "JSONEachRow",
-          abort_signal: signal,
-        })
-        .then((rs) => rs.json<Disclaimer>()),
-    select: (rows) => rows[0].disclaimer,
+    queryFn: async ({ signal }) => {
+      const endpoint = new URL(
+        "trackernet_disclaimer",
+        import.meta.env.VITE_API_BASE_URL,
+      );
+
+      const response = await fetch(endpoint, { signal });
+
+      if (!response.ok) {
+        throw new Error("Backend request failed.");
+      }
+
+      return await response.text();
+    },
     staleTime: disclaimerQueryStaleTime,
   });
 }

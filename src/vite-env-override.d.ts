@@ -12,6 +12,6 @@ declare module "*lines.csv" {
 
 interface ImportMeta {
   env: {
-    VITE_CLICKHOUSE_URL: string;
+    VITE_API_BASE_URL: string;
   };
 }

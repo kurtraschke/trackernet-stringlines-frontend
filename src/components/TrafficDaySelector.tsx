@@ -1,6 +1,5 @@
 import { DatePicker, FormGroup, Spinner } from "@patternfly/react-core";
-import React, { use } from "react";
-import { ClickHouseContext } from "../ClickHouseContext.ts";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Temporal } from "temporal-polyfill";
 import { dateToPlainDate } from "../utils.ts";
@@ -15,11 +14,7 @@ const TrafficDaySelector: React.FunctionComponent<TrafficDaySelectorParams> = ({
   selectedTrafficDay,
   setSelectedTrafficDay,
 }) => {
-  const client = use(ClickHouseContext);
-
-  const { isPending, isError, data, error } = useQuery(
-    validTrafficDaysQuery(client),
-  );
+  const { isPending, isError, data, error } = useQuery(validTrafficDaysQuery());
 
   if (isPending) {
     return <Spinner size="md" />;
@@ -54,7 +49,7 @@ const TrafficDaySelector: React.FunctionComponent<TrafficDaySelectorParams> = ({
         }}
         validators={[rangeValidator]}
         required
-        inputProps={{id: "traffic-day"}}
+        inputProps={{ id: "traffic-day" }}
       />
     </FormGroup>
   );
