@@ -1,6 +1,5 @@
-import { VegaLite } from "react-vega";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { Temporal } from "temporal-polyfill";
 import lines from "./lines.csv";
 import type { TopLevelSpec } from "vega-lite";
@@ -8,12 +7,23 @@ import {
   stationNamesQuery,
   stringlineQuery,
   configurationDetailsQuery,
+  type StationName,
+  type StringlineDatum,
+  type ConfigurationDetails,
 } from "../queries.ts";
 import { EmptyState, Spinner } from "@patternfly/react-core";
 import { isCurrentTrafficDay, trafficDayToTimeRange } from "../utils.ts";
 import { notFound } from "@tanstack/react-router";
 import { css } from "@patternfly/react-styles";
 import sizing from "@patternfly/react-styles/css/utilities/Sizing/sizing";
+import { useVegaEmbed } from "react-vega";
+import type { EmbedOptions } from "vega-embed";
+
+interface Line {
+  line_code: string;
+  line_name: string;
+  line_color: string;
+}
 
 const currentTrafficDayStaleTime = Temporal.Duration.from("PT1M").total({
   unit: "millisecond",
@@ -79,24 +89,56 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
 
   if ([stnIsPending, cdIsPending, stlIsPending].some((element) => element)) {
     return <EmptyState titleText="Loading" headingLevel="h4" icon={Spinner} />;
+  } else {
+    if (cdData === undefined) {
+      throw notFound({ routeId: "/stringline/$config/$trafficDay" });
+    } else if (stnData != undefined && stlData != undefined) {
+      return (
+        <RenderStringline
+          trafficDay={trafficDay}
+          configurationDetails={cdData}
+          stationNames={stnData}
+          lines={lines}
+          stringlineData={stlData}
+        />
+      );
+    } else {
+      throw new Error("Unknown error.");
+    }
   }
+};
 
-  if (cdData === undefined) {
-    throw notFound({ routeId: "/stringline/$config/$trafficDay" });
-  }
+interface RenderStringlineParams {
+  trafficDay: Temporal.PlainDate;
+  configurationDetails: ConfigurationDetails;
+  stationNames: StationName[];
+  lines: Line[];
+  stringlineData: StringlineDatum[];
+}
 
+const RenderStringline: React.FunctionComponent<RenderStringlineParams> = ({
+  trafficDay,
+  configurationDetails,
+  stationNames,
+  lines,
+  stringlineData,
+}) => {
   const { start: trafficDayStart, end: trafficDayEnd } =
     trafficDayToTimeRange(trafficDay);
 
-  const sortDataset = cdData.station_codes.map((value, index) => ({
-    station_code: value,
-    sort_order: index,
-  }));
+  const stationSort = configurationDetails.station_codes.map(
+    (value, index) => ({
+      station_code: value,
+      sort_order: index,
+    }),
+  );
 
-  const sortDirection = cdData.direction ? "ascending" : "descending";
+  const sortDirection = configurationDetails.direction
+    ? "ascending"
+    : "descending";
 
   const spec: TopLevelSpec = {
-    title: `${cdData.name} on ${trafficDay.toString({ calendarName: "never" })}`,
+    title: `${configurationDetails.name} on ${trafficDay.toString({ calendarName: "never" })}`,
     width: "container",
     height: "container",
     data: { name: "table" },
@@ -239,19 +281,32 @@ const StringlineDiagram: React.FunctionComponent<StringlineDiagramParams> = ({
     },
   };
 
-  return (
-    <VegaLite
-      spec={spec}
-      scaleFactor={2}
-      className={css(sizing.w_100, sizing.h_100)}
-      data={{
-        stationNames: stnData,
-        lines,
-        table: stlData,
-        stationSort: sortDataset,
-      }}
-    />
-  );
+  const ref = React.useRef<HTMLDivElement>(null);
+
+  const options: EmbedOptions = {
+    mode: "vega-lite",
+    scaleFactor: 2,
+  };
+
+  const embed = useVegaEmbed({ ref, spec, options });
+
+  useEffect(() => {
+    void embed?.view.data("table", stringlineData).resize().runAsync();
+  }, [embed, stringlineData]);
+
+  useEffect(() => {
+    void embed?.view.data("stationNames", stationNames).resize().runAsync();
+  }, [embed, stationNames]);
+
+  useEffect(() => {
+    void embed?.view.data("lines", lines).resize().runAsync();
+  }, [embed, lines]);
+
+  useEffect(() => {
+    void embed?.view.data("stationSort", stationSort).resize().runAsync();
+  }, [embed, stationSort]);
+
+  return <div className={css(sizing.w_100, sizing.h_100)} ref={ref} />;
 };
 
 export default StringlineDiagram;

@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-overrides:
-  react-vega@7>vega-embed: ^7.0.2
-
 importers:
 
   .:
@@ -39,14 +36,17 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
       react-vega:
-        specifier: ^7.7.1
-        version: 7.7.1(react@19.2.3)(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0)
+        specifier: ^8.0.0
+        version: 8.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vega-embed@7.1.0(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0))
       temporal-polyfill:
         specifier: ^0.3.0
         version: 0.3.0
       vega:
         specifier: ^6.2.0
         version: 6.2.0
+      vega-embed:
+        specifier: ^7.1.0
+        version: 7.1.0(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0)
       vega-lite:
         specifier: ^6.4.1
         version: 6.4.1(vega@6.2.0)
@@ -2091,12 +2091,12 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-vega@7.7.1:
-    resolution: {integrity: sha512-Dj7n1LkfJEkY/FdwQfOZqIQ+wGUcJNwlTuWhYcuQtbBpTgvtI4wwqOvJ0QWBE19nXMU7t9HmP8sqQO5v6soOlg==}
+  react-vega@8.0.0:
+    resolution: {integrity: sha512-euye4Gec2ScnUK1zbSA2tzZXUwBmbba8bfbzaRVhdEJTGQfaD78bSgqrccrl9b2fKZS1TZXR0NADEHVe6nxvBg==}
     peerDependencies:
-      react: ^16 || ^17 || ^18 || ^19
-      vega: '*'
-      vega-lite: '*'
+      react: ^17 || ^18 || ^19
+      react-dom: ^17 || ^18 || ^19
+      vega-embed: ^7
 
   react@19.2.3:
     resolution: {integrity: sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA==}
@@ -2551,8 +2551,8 @@ packages:
   vega-dataflow@6.1.0:
     resolution: {integrity: sha512-JxumGlODtFbzoQ4c/jQK8Tb/68ih0lrexlCozcMfTAwQ12XhTqCvlafh7MAKKTMBizjOfaQTHm4Jkyb1H5CfyQ==}
 
-  vega-embed@7.0.2:
-    resolution: {integrity: sha512-ZHQPWSs9mUTGJPZ5yQVhHV+OLDCoTIjR//De93vG6igZX1MQCVo03ePWlfWCUAnPV1IsKfeJLqA3K/Qd11bAFQ==}
+  vega-embed@7.1.0:
+    resolution: {integrity: sha512-ZmEIn5XJrQt7fSh2lwtSdXG/9uf3yIqZnvXFEwBJRppiBgrEWZcZbj6VK3xn8sNTFQ+sQDXW5sl/6kmbAW3s5A==}
     peerDependencies:
       vega: '*'
       vega-lite: '*'
@@ -2641,9 +2641,6 @@ packages:
 
   vega-typings@2.1.0:
     resolution: {integrity: sha512-zdis4Fg4gv37yEvTTSZEVMNhp8hwyEl7GZ4X4HHddRVRKxWFsbyKvZx/YW5Z9Ox4sjxVA2qHzEbod4Fdx+SEJA==}
-
-  vega-util@2.0.0:
-    resolution: {integrity: sha512-/ayLYX3VVqfkKJB1mG+xkOKiBVlfFZ9BfUB5vf7eVyIRork24sABXdeH4x+XeWuqDKnLBTDedotA+1a5MxlV2Q==}
 
   vega-util@2.1.0:
     resolution: {integrity: sha512-PGfp0m0QCufDmcxKJCWQy4Ov23FoF8DSXmoJwSezi3itQaa2hbxK0+xwsTMP2vy4PR16Pu25HMzgMwXVW1+33w==}
@@ -5033,15 +5030,12 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-vega@7.7.1(react@19.2.3)(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0):
+  react-vega@8.0.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vega-embed@7.1.0(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0)):
     dependencies:
-      '@types/react': 19.2.7
       fast-deep-equal: 3.1.3
-      prop-types: 15.8.1
       react: 19.2.3
-      vega: 6.2.0
-      vega-embed: 7.0.2(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0)
-      vega-lite: 6.4.1(vega@6.2.0)
+      react-dom: 19.2.3(react@19.2.3)
+      vega-embed: 7.1.0(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0)
 
   react@19.2.3: {}
 
@@ -5523,7 +5517,7 @@ snapshots:
       vega-loader: 5.1.0
       vega-util: 2.1.0
 
-  vega-embed@7.0.2(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0):
+  vega-embed@7.1.0(vega-lite@6.4.1(vega@6.2.0))(vega@6.2.0):
     dependencies:
       fast-json-patch: 3.1.1
       json-stringify-pretty-compact: 4.0.0
@@ -5598,7 +5592,7 @@ snapshots:
 
   vega-interpreter@2.0.0:
     dependencies:
-      vega-util: 2.0.0
+      vega-util: 2.1.0
 
   vega-label@2.1.0:
     dependencies:
@@ -5693,7 +5687,7 @@ snapshots:
 
   vega-tooltip@1.0.0:
     dependencies:
-      vega-util: 2.0.0
+      vega-util: 2.1.0
 
   vega-transforms@5.1.0:
     dependencies:
@@ -5709,8 +5703,6 @@ snapshots:
       vega-event-selector: 4.0.0
       vega-expression: 6.1.0
       vega-util: 2.1.0
-
-  vega-util@2.0.0: {}
 
   vega-util@2.1.0: {}
 

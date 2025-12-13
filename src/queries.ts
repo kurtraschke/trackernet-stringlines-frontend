@@ -1,5 +1,3 @@
-// noinspection SqlNoDataSourceInspection,SqlResolve
-
 import { Temporal } from "temporal-polyfill";
 import { queryOptions } from "@tanstack/react-query";
 
@@ -33,7 +31,7 @@ export function configurationsQuery() {
   });
 }
 
-interface StationName {
+export interface StationName {
   station_code: string;
   station_name: string;
 }
@@ -63,7 +61,7 @@ export function stationNamesQuery() {
   });
 }
 
-interface ConfigurationDetails {
+export interface ConfigurationDetails {
   id: number;
   name: string;
   direction: number;
@@ -98,7 +96,7 @@ export function configurationDetailsQuery(configurationId: number) {
   });
 }
 
-interface StringlineDatum {
+export interface StringlineDatum {
   line_code: string;
   set: string;
   trip: string;
