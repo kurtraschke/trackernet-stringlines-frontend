@@ -294,7 +294,8 @@ const RenderStringline: React.FunctionComponent<RenderStringlineParams> = ({
     .data("table", stringlineData)
     .data("stationNames", stationNames)
     .data("lines", lines)
-    .data("stationSort", stationSort);
+    .data("stationSort", stationSort)
+    .resize();
 
   useEffect(() => {
     void embed?.view.data("table", stringlineData).resize().runAsync();
