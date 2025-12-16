@@ -290,6 +290,12 @@ const RenderStringline: React.FunctionComponent<RenderStringlineParams> = ({
 
   const embed = useVegaEmbed({ ref, spec, options });
 
+  embed?.view
+    .data("table", stringlineData)
+    .data("stationNames", stationNames)
+    .data("lines", lines)
+    .data("stationSort", stationSort);
+
   useEffect(() => {
     void embed?.view.data("table", stringlineData).resize().runAsync();
   }, [embed, stringlineData]);
