@@ -59,7 +59,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/howto': typeof HowtoRoute
-  '/stringline': typeof StringlineIndexRoute
+  '/stringline/': typeof StringlineIndexRoute
   '/stringline/$config/$trafficDay': typeof StringlineConfigTrafficDayRoute
   '/stringline/$config/today': typeof StringlineConfigTodayRoute
   '/stringline/$config/yesterday': typeof StringlineConfigYesterdayRoute
@@ -89,7 +89,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/howto'
-    | '/stringline'
+    | '/stringline/'
     | '/stringline/$config/$trafficDay'
     | '/stringline/$config/today'
     | '/stringline/$config/yesterday'
@@ -149,7 +149,7 @@ declare module '@tanstack/react-router' {
     '/stringline/': {
       id: '/stringline/'
       path: '/stringline'
-      fullPath: '/stringline'
+      fullPath: '/stringline/'
       preLoaderRoute: typeof StringlineIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
