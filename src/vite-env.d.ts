@@ -1,3 +1,9 @@
 /// <reference types="./vite-env-override.d.ts" />
 /// <reference types="unplugin-info/client" />
 /// <reference types="vite/client" />
+
+declare module "*.mdx" {
+  let MDXComponent: (props: unknown) => JSX.Element;
+  // noinspection JSUnusedGlobalSymbols
+  export default MDXComponent;
+}
