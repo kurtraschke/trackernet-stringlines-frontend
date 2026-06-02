@@ -29,7 +29,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@mdx-js/rollup": "^3.1.1",
-    "@rollup/plugin-dsv": "^3.0.5",
+    "@rollup/plugin-dsv": "^4.0.0",
     "@tanstack/eslint-plugin-query": "^5.100.14",
     "@tanstack/eslint-plugin-router": "^1.162.0",
     "@tanstack/router-plugin": "^1.168.11",
