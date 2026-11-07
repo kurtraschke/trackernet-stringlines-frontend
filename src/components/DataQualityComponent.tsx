@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Popover } from "@patternfly/react-core";
+import { Label, Title, Tooltip } from "@patternfly/react-core";
 
 interface DataQualityProps {
   status?: "success" | "warning" | "danger" | "info" | "custom";
@@ -25,13 +25,16 @@ const DataQuality: React.FunctionComponent<DataQualityProps> = ({
   bodyContent = defaultBodyContent,
 }) => {
   return (
-    <Popover
-      triggerAction="hover"
-      headerContent={headerContent}
-      bodyContent={bodyContent}
+    <Tooltip
+      content={
+        <>
+          <Title headingLevel="h6">{headerContent}</Title>
+          {bodyContent}
+        </>
+      }
     >
       <Label status={status}>{labelText}</Label>
-    </Popover>
+    </Tooltip>
   );
 };
 
