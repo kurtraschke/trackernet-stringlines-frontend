@@ -27,6 +27,7 @@ const ConfigurationSelector: React.FunctionComponent<
   }
 
   const onChange = (
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     _event: React.FormEvent<HTMLSelectElement>,
     value: string,
   ) => {
