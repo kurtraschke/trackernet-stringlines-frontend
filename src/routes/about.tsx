@@ -1,17 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-
-import AboutContent from "../components/about.mdx";
-import { css } from "@patternfly/react-styles";
-import spacing from "@patternfly/react-styles/css/utilities/Spacing/spacing";
+import { AboutPage } from "../components/pages/AboutPage.tsx";
 
 export const Route = createFileRoute("/about")({
-  component: About,
+  component: AboutPage,
 });
-
-function About() {
-  return (
-    <div className={css(spacing.mx_4xl)}>
-      <AboutContent />
-    </div>
-  );
-}
